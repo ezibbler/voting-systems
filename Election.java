@@ -19,7 +19,7 @@ public class Election {
         }
     }
 
-    public int firstPastThePost() {
+    public String firstPastThePost() {
         int[] votes = new int[10];
 
         for (Voter v : voters) {
@@ -49,6 +49,33 @@ public class Election {
             }
         }
 
-        return candidateIndex;
+        return electionTable(votes);
+    }
+
+    private String electionTable(int[] votes) {
+        final String TABLE_HEADER = "-".repeat(13);
+        final String COLUMNS = "| votes | % |";
+        String tableContent = "";
+        int voteTotal = 0;
+
+        for (int vote : votes) {
+            voteTotal += vote;
+        }
+
+        for (int i = 0; i < votes.length; i++) {
+            final double VOTE_PERCENTAGE = ((int) 1000.0 * votes[i] / voteTotal) / 10.0;
+            tableContent += "| " + i + " | " + VOTE_PERCENTAGE + " |\n";
+        }
+        /* Displays table in the format of:
+         * --------
+         * | v | % |
+         * | c
+         * | c
+         * | c
+         * | c
+         *  --------
+         */
+
+        return TABLE_HEADER + "\n" + COLUMNS + "\n" + tableContent + TABLE_HEADER;
     }
 }
