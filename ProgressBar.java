@@ -2,7 +2,7 @@ class ProgressBar {
     private int barLength;
     private int startNum;
     private int numMax;
-    private int decimals = 3;
+    private int decimals = 1;
     private String endBuffer = "";
     private String fillChar = "#";
 
@@ -18,11 +18,12 @@ class ProgressBar {
     }
 
     public String updateBar(int newNum) {
-        if ((double) newNum / numMax <= lastValue) {
+        double barPercentage = ( Math.pow(10, 2 + decimals) * ((double) newNum / numMax) ) / Math.pow(10, 2 + decimals);
+        if (barPercentage <= lastValue) {
             return "no change";
         }
-        int barProportion = (int) ((double) newNum / numMax) * barLength;
-        lastValue = (double) newNum / numMax;
+        int barProportion = (int) (barPercentage * barLength);
+        lastValue = barPercentage;
         String barString = fillChar.repeat(barProportion);
         return endBuffer + barString + endBuffer;
     }
