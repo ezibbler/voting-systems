@@ -7,6 +7,12 @@ public class Voter {
         this.beliefs = beliefs;
     }
 
+    public Voter() {
+        for (int i = 0; i < beliefs.length; i++) {
+            beliefs[i] = Math.random();
+        }
+    }
+
     public double[] getBeliefs() {
         return beliefs;
     }
