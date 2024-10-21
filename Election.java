@@ -18,4 +18,37 @@ public class Election {
             candidates[i] = new Voter();
         }
     }
+
+    public int firstPastThePost() {
+        int[] votes = new int[10];
+
+        for (Voter v : voters) {
+            double minDistance = Double.MAX_VALUE;
+            int candidateIndex = -1;
+
+            for (int c = 0; c < candidates.length; c++) {
+                double distance = Voter.calculateIdeologicalDistance(v, candidates[c]);
+
+                if (distance < minDistance) {
+                    candidateIndex = c;
+                    minDistance = distance;
+                }
+
+            }
+
+            votes[candidateIndex]++;
+        }
+
+        int maxVotes = 0;
+        int candidateIndex = -1;
+
+        for (int i = 0; i < votes.length; i++) {
+            if (votes[i] > maxVotes) {
+                candidateIndex = i;
+                maxVotes = votes[i];
+            }
+        }
+
+        return candidateIndex;
+    }
 }
