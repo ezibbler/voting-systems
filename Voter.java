@@ -19,10 +19,9 @@ public class Voter {
         double distance = 0.0;
 
         for (int i = 0; i < v1.getBeliefs().length; i++) {
-            distance += Math.pow(v1.getBeliefs()[i], 2);
-            distance += Math.pow(v2.getBeliefs()[i], 2);
+            distance += Math.pow(v1.getBeliefs()[i] -v2.getBeliefs()[i], 2);
         }
 
-        return Math.sqrt(distance);
+        return Math.abs(Math.sqrt(distance));
     }
 }
