@@ -17,6 +17,12 @@ public class Voter {
         this.beliefs = beliefs;
     }
 
+    public Voter(boolean placeholder) {
+        for (int i = 0; i < beliefs.length; i++) {
+            beliefs[i] = Math.random();
+        }
+    }
+
     public Voter() {
         for (int i = 0; i < beliefs.length; i++) {
             beliefs[i] = Math.random();

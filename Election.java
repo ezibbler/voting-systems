@@ -9,7 +9,7 @@ public class Election {
 
     private void initializeVoters() {
         for (int i = 0; i < voters.length; i++) {
-            voters[i] = new Voter();
+            voters[i] = new Voter(false);
         }
     }
 
