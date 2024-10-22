@@ -74,7 +74,7 @@ public class Election {
         }
 
         for (int i = 0; i < votes.length; i++) {
-            voteData[i][0] = String.valueOf(i);
+            voteData[i][0] = candidates[i].getName();
             voteData[i][1] = String.valueOf(votes[i]);
             voteData[i][2] = String.valueOf(((int) 1000.0 * votes[i] / voteTotal) / 10.0);
 
