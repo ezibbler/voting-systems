@@ -63,15 +63,4 @@ public class Table {
 
         return rowString + "\n";
     }
-
-    private int findLongestElementLength(String[] strs) {
-        int maxLength = 0;
-        for (String str : strs) {
-            if (str.length() > maxLength) {
-                maxLength = str.length();
-            }
-        }
-
-        return maxLength;
-    }
 }

@@ -19,7 +19,21 @@ public class Election {
         }
     }
 
-    public String firstPastThePost() {
+    public void run(String electionType) {
+        String result = "";
+        switch (electionType) {
+            case "fptp": case "first past the post":
+                result = firstPastThePost();
+                break;
+        
+            default:
+                result = "Not a valid election type";
+        }
+
+        System.out.println(result);
+    }
+
+    private String firstPastThePost() {
         int[] votes = new int[10];
 
         for (Voter v : voters) {
