@@ -7,6 +7,14 @@ public class Election {
         initializeVoters();
     }
 
+    public Election(int numVoters, int numCandidates) {
+        voters = new Voter[numVoters];
+        candidates = new Voter[numCandidates];
+        
+        initializeCandidates();
+        initializeVoters();
+    }
+
     private void initializeVoters() {
         for (int i = 0; i < voters.length; i++) {
             voters[i] = new Voter(false);
@@ -34,7 +42,7 @@ public class Election {
     }
 
     private String firstPastThePost() {
-        int[] votes = new int[10];
+        int[] votes = new int[candidates.length];
 
         for (Voter v : voters) {
             double minDistance = Double.MAX_VALUE;
