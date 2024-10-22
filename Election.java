@@ -49,13 +49,10 @@ public class Election {
             }
         }
 
-        return electionTable(votes);
-    }
+        String[] headers = new String[]{"Candidate", "Votes", "%"};
 
-    private String electionTable(int[] votes) {
-        final String TABLE_HEADER = "-".repeat(13);
-        final String COLUMNS = "| votes | % |";
-        String tableContent = "";
+        String[][] voteData = new String[votes.length][headers.length];
+
         int voteTotal = 0;
 
         for (int vote : votes) {
@@ -63,19 +60,13 @@ public class Election {
         }
 
         for (int i = 0; i < votes.length; i++) {
-            final double VOTE_PERCENTAGE = ((int) 1000.0 * votes[i] / voteTotal) / 10.0;
-            tableContent += "| " + i + " | " + VOTE_PERCENTAGE + " |\n";
-        }
-        /* Displays table in the format of:
-         * --------
-         * | v | % |
-         * | c
-         * | c
-         * | c
-         * | c
-         *  --------
-         */
+            voteData[i][0] = String.valueOf(i);
+            voteData[i][1] = String.valueOf(votes[i]);
+            voteData[i][2] = String.valueOf(((int) 1000.0 * votes[i] / voteTotal) / 10.0);
 
-        return TABLE_HEADER + "\n" + COLUMNS + "\n" + tableContent + TABLE_HEADER;
+        }
+        Table table = new Table(headers, voteData);
+
+        return table.getTable();
     }
 }
