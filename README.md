@@ -1,5 +1,5 @@
 # voting-systems
-A Java-based test of voting systems
+A Java-based test of voting systems and how elections would differ if alternate voting systems were used
 
 ## List of Voting Systems Used
 * [First Past the Post][fptp]
