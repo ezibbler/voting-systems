@@ -25,6 +25,9 @@ public class Table {
         for (int i = 0; i < columnWidths.length; i++) {
             int dataLength = 0;
             for (int j = 0; j < data.length; j++) {
+                if (data[j][i] == null) {
+                    continue;
+                }
                 if (data[j][i].length() > dataLength) {
                     dataLength = data[j][i].length();
                 }
