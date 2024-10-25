@@ -42,7 +42,11 @@ public class Election {
             case "ranked choice":
                 result = rankedChoice();
                 break;
-        
+
+            case "borda":
+                result = bordaCount();
+                break;
+
             default:
                 result = "Not a valid election type";
         }
@@ -203,5 +207,63 @@ public class Election {
 
         return table.getTable();
 
+    }
+
+    private String bordaCount() {
+        //voters give all candidates votes in order
+        //each candidate gets (n-their rank) votes from each voter
+
+        int[] votes = new int[candidates.length];
+
+        for (int v = 0; v < voters.length; v++) {
+            double[] ideologyDifferences = new double[candidates.length];
+            for (int c = 0; c < candidates.length; c++) {
+                ideologyDifferences[c] = Voter.calculateIdeologicalDistance(voters[v], candidates[c]);
+            }
+
+            for (int p = 1; p < candidates.length; p++) {
+                double minDistance = Double.MAX_VALUE;
+                int candidateIndex = -1;
+                for (int c = 0; c < candidates.length; c++) {
+                    if (ideologyDifferences[c] < minDistance) {
+                        minDistance = ideologyDifferences[c];
+                        candidateIndex = c;
+                    }
+                }
+                votes[candidateIndex] += candidates.length - p;
+                ideologyDifferences[candidateIndex] = Double.MAX_VALUE;
+            }
+            
+        }
+
+        int maxVotes = 0;
+        int candidateIndex = -1;
+
+        for (int i = 0; i < votes.length; i++) {
+            if (votes[i] > maxVotes) {
+                candidateIndex = i;
+                maxVotes = votes[i];
+            }
+        }
+
+        String[] headers = new String[]{"Candidate", "Votes", "%"};
+
+        String[][] voteData = new String[votes.length][headers.length];
+
+        int voteTotal = 0;
+
+        for (int vote : votes) {
+            voteTotal += vote;
+        }
+
+        for (int i = 0; i < votes.length; i++) {
+            voteData[i][0] = candidates[i].getName();
+            voteData[i][1] = String.valueOf(votes[i]);
+            voteData[i][2] = String.valueOf(((int) 1000.0 * votes[i] / voteTotal) / 10.0);
+
+        }
+        Table table = new Table(headers, voteData);
+
+        return table.getTable();
     }
 }
