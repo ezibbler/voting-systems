@@ -75,11 +75,9 @@ public class Election {
         }
 
         int maxVotes = 0;
-        int candidateIndex = -1;
 
         for (int i = 0; i < votes.length; i++) {
             if (votes[i] > maxVotes) {
-                candidateIndex = i;
                 maxVotes = votes[i];
             }
         }
@@ -237,11 +235,9 @@ public class Election {
         }
 
         int maxVotes = 0;
-        int candidateIndex = -1;
 
         for (int i = 0; i < votes.length; i++) {
             if (votes[i] > maxVotes) {
-                candidateIndex = i;
                 maxVotes = votes[i];
             }
         }
