@@ -47,6 +47,10 @@ public class Election {
                 result = bordaCount();
                 break;
 
+            case "two round":
+                result = twoRound();
+                break;
+
             default:
                 result = "Not a valid election type";
         }
@@ -259,6 +263,129 @@ public class Election {
 
         }
         Table table = new Table(headers, voteData);
+
+        return table.getTable();
+    }
+
+    private String twoRound() {
+        double[][] ideologyMatrix = new double[voters.length][candidates.length];
+        int[][] votes = new int[2][candidates.length];
+
+        //create voter adjacency matrix
+        for (int v = 0; v < voters.length; v++) {
+            for (int c = 0; c < candidates.length; c++) {
+                ideologyMatrix[v][c] = Voter.calculateIdeologicalDistance(voters[v], candidates[c]);
+            }
+        }
+
+        boolean raceOver = false;
+
+        for (int v = 0; v < voters.length; v++) {
+            int candidateIndex = -1;
+            double minDistance = Double.MAX_VALUE;
+            for (int c = 0; c < candidates.length; c++) {
+                if (ideologyMatrix[v][c] < minDistance) {
+                    candidateIndex = c;
+                    minDistance = ideologyMatrix[v][c];
+                }
+            }
+
+            votes[0][candidateIndex]++;
+
+            if (votes[0][candidateIndex] >= (voters.length + 2) / 2) {
+                raceOver = true;
+            }
+        }
+
+        if (raceOver) {
+            //TODO: return table
+        }
+
+        //find top two candidates
+
+        int firstCandidateVotes = 0;
+        int firstCandidateIndex = -1;
+
+        int secondCandidateVotes = 0;
+        int secondCandidateIndex = -1;
+        for (int c = 0; c < candidates.length; c++) {
+            if (votes[0][c] > secondCandidateVotes) {
+                if (votes[0][c] > firstCandidateVotes) {
+                    secondCandidateVotes = firstCandidateVotes;
+                    secondCandidateIndex = firstCandidateIndex;
+
+                    firstCandidateVotes = votes[0][c];
+                    firstCandidateIndex = c;
+                    
+                    
+                } else {
+                    secondCandidateVotes = votes[0][c];
+                    secondCandidateIndex = c;
+                }
+            }
+        }
+
+        //place ideology difference for other candidates at MAX_VALUE
+
+        for (int v = 0; v < voters.length; v++) {
+            for (int c = 0; c < candidates.length; c++) {
+                if (c == firstCandidateIndex || c == secondCandidateIndex) {
+                    continue;
+                }
+                ideologyMatrix[v][c] = Double.MAX_VALUE;
+            }
+        }
+
+        //run election again
+        for (int v = 0; v < voters.length; v++) {
+            int candidateIndex = -1;
+            double minDistance = Double.MAX_VALUE;
+            for (int c = 0; c < candidates.length; c++) {
+                if (ideologyMatrix[v][c] < minDistance) {
+                    candidateIndex = c;
+                    minDistance = ideologyMatrix[v][c];
+                }
+            }
+
+            votes[1][candidateIndex]++;
+        }
+
+        ArrayList<String> headers = new ArrayList<String>();
+
+        headers.add("Candidate");
+
+        for (int r = 0; r < (raceOver ? 1 : 2); r++) {
+            headers.add("Round " + r);
+            headers.add("%");
+        }
+
+        String[] newHeaders = new String[headers.size()];
+
+        for (int h = 0; h < headers.size(); h++) {
+            newHeaders[h] = headers.get(h);
+        }
+
+        String[][] voteData = new String[candidates.length][headers.size()];
+
+        int voteTotal = 0;
+
+        for (int vote : votes[(raceOver ? 0 : 1)]) {
+            voteTotal += vote;
+        }  
+
+        
+
+        for (int i = 0; i < candidates.length; i++) {
+            voteData[i][0] = candidates[i].getName() /*"(" + Math.round() Voter.calculateIdeologicalDistance(NEUTRAL_VOTER, candidates[i]) + ")"*/;
+
+            for (int r = 0; r < (raceOver ? 1 : 2); r += 1) {
+                voteData[i][2 * r + 1] = String.valueOf(votes[r][i]);
+                voteData[i][2 * r + 2] = String.valueOf(((int) 1000.0 * votes[r][i] / voteTotal) / 10.0);
+            }
+
+        }
+
+        Table table = new Table(newHeaders, voteData);
 
         return table.getTable();
     }

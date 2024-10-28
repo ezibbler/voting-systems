@@ -8,6 +8,7 @@ The program creates 100,000 simulated voters with a 16-dimensional vector repres
 * [First Past the Post][fptp]
 * [Ranked-Choice Voting][rcv]
 * [Borda Count][borda]
+* [Two-round system][two-round]
 
 ## Other Sourced Info
 * List of 1000 most common last names sourced from [craigh411's List of the 1000 Most Common Last Names][names]
@@ -17,3 +18,4 @@ The program creates 100,000 simulated voters with a 16-dimensional vector repres
 [rcv]: https://en.wikipedia.org/wiki/Instant-runoff_voting
 [borda]: https://en.wikipedia.org/wiki/Borda_count
 [spatial]: https://en.wikipedia.org/wiki/Spatial_voting
+[two-round]: https://en.wikipedia.org/wiki/Two-round_system

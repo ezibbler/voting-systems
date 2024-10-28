@@ -5,5 +5,6 @@ public class Main {
         election.run("fptp");
         election.run("ranked choice");
         election.run("borda");
+        election.run("two round");
     }
 }
